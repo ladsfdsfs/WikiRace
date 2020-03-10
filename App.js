@@ -6,6 +6,9 @@ import {createStackNavigator} from '@react-navigation/stack';
 
 import {WebView} from 'react-native-webview';
 
+import {Race} from './Race'
+
+
 async function storeData(key, data){
   try{
     await AsyncStorage.setItem(key, data)
@@ -53,8 +56,11 @@ class MyWeb extends Component {
 }
 
 function HomeScreen({navigation}){
+  function nav(){
+    
+  }
   return (<View style={styles.container}>
-    <LinkGetter />
+    <LinkGetter navigation={{navigation}}/>
   <MyWeb/>
   </View>)
 }
@@ -62,7 +68,11 @@ function HomeScreen({navigation}){
 class LinkGetter extends Component{
   constructor(props){
     super(props);
-    this.state={start:'<<-- Press to set the current wiki page as this!', end:'<<-- Press to set the current wiki page as this!'}
+    console.log(props.navigation)
+    this.state={
+      start:'<<-- Press to set the current wiki page as this!', 
+      end:'<<-- Press to set the current wiki page as this!',
+      nav:props.navigation}
   }
   render(){
     return(
@@ -91,10 +101,12 @@ class LinkGetter extends Component{
     
     <View>
       <TouchableHighlight onPress={()=>{
-        console.log('Start button here')
+        console.log('help!!')
+        console.log(this.state.nav)
+        this.state.nav.navigation.navigate('WikiRace Go!')
       }
     }>
-        <Text>Find link</Text>
+        <Text style={styles.next}>Start the race!</Text>
       </TouchableHighlight>
     </View>
       
@@ -105,18 +117,7 @@ class LinkGetter extends Component{
 }
 
 
-function Race({navigation}){
 
-  function _onNavChange(webViewState){
-    let url = webViewState.url;
-  }
-
-  return (<View>
-    <WebView
-    
-    />
-  </View>)
-}
 
 export default function App() {
   return (
@@ -147,10 +148,19 @@ const styles = StyleSheet.create({
       height:60 
    },
    button:{
-     backgroundColor:'gray',
+     backgroundColor:'white',
      margin:10,
      fontSize:20,
-     color:'green'
+     color:'green',
+     padding:5
      
+   },
+   next:{
+     backgroundColor:'white',
+     margin:10,
+     padding:5,
+     fontSize:15,
+     textAlign:'center',
+     color:'blue'
    }
 });
