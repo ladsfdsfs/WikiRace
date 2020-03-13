@@ -30,6 +30,7 @@ async function getData(key){
 
 const Stack = createStackNavigator();
 class MyWeb extends Component {
+  
   storeData = async (key, data)=>{
     try{
       await AsyncStorage.setItem(key, data)
@@ -41,11 +42,13 @@ class MyWeb extends Component {
   _onNavChange(webViewState){
     let url = webViewState.url;
     this.storeData('curr', url)
+    
   }
   
   render() {
     return (<View style={{flex:1, justifyContent:'center', alignSelf:'center'}}>
       <WebView
+        
         onNavigationStateChange={this._onNavChange.bind(this)}
         source={{ uri: 'https://m.wikipedia.org' }}
         style={styles.web}
